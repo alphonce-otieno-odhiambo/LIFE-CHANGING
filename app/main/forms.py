@@ -1,16 +1,18 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,BooleanField,SubmitField
-from wtforms import validators
-from wtforms.validators import Required, Email
-from wtforms import ValidationError
-from models import User
+from wtforms import StringField,TextAreaField,SubmitField,ValidationError,SelectField
+from wtforms.validators import Required,Email
+from ..models import User
 
-class regestrationForm(FlaskForm):
-    username = StringField('Enter your name',validators=[Required()])
-    email = StringField('Fill in your email',validators=[Required(), Email()])
-    password = PasswordField('Correct password',validators=[Required()])
-    password_confirm = PasswordField('Confirm password', validators=[Required()])
-    submit = SubmitField('Sign Up')
-    
-
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Tell us about you.',validators = [Required()])
+    submit = SubmitField('Submit')
+class PitchForm(FlaskForm): #form for submitting pitches
+  pitch_category = SelectField('Pitch Category', choices=[('Project pitch', 'Project pitch'), ('Game pitch', 'Game pitch'), ('Pick-up lines', 'Pick-up lines'), ('Interview pitch','Interview pitch')],validators=[Required()])
+  pitch_title = StringField('Pitch title',validators=[Required()])
+  pitch = TextAreaField('Type in your pitch.',validators=[Required()])
+  submit = SubmitField('Submit')
+  
+class CommentsForm(FlaskForm): #form for submitting comments for different pitches
+  comment = TextAreaField('Leave a comment.',validators=[Required()])
+  submit = SubmitField('Submit')    
 
