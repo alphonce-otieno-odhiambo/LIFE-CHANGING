@@ -2,7 +2,7 @@ from wtforms import form
 from ..models import  User
 from flask import  render_template, redirect, url_for
 from . import auth
-from forms import RegistrationForm
+from .forms import RegistrationForm
 from .. import db
 
 
