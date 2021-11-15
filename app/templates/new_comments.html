@@ -1,0 +1,37 @@
+{% extends 'pitch-categories/pitchbase.html' %}
+{% import "bootstrap/wtf.html" as wtf  %}
+
+<!--Styles section-->
+{% block styles %}
+  {{ super()}}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/pitch.css')}}">
+{% endblock%}
+
+{% block content %}
+  <div class="container">
+    <!--Displaying the pitch to leave a comment for-->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card" >
+          <h1>{{ pitch.pitch_title }}</h1>
+          <p>{{ pitch.pitch }}</p>
+          <p><i>Submitted on {{ pitch.submitted }}</i></p>
+        </div>
+        <!--Displaying comments-->
+        <div class="comments" style="background-color: purple;border-radius:30px;padding:10px;">
+          <h1 class="text-center">Comments</h1>
+          {%for comments in comments_found%}
+            <ul>
+              <li>{{comments.comment}}</li>
+            </ul>
+          {%endfor%}
+        </div>
+      </div>
+      <!--Comments form-->
+      <div class="col-md-4">
+        {{wtf.quick_form(comments_form)}}
+      </div>
+    </div>
+  
+  </div>
+{% endblock  %}
