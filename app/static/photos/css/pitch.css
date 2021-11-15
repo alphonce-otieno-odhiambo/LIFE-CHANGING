@@ -1,0 +1,17 @@
+/*template body*/
+body{
+    background-color: #ebb383;
+    font-size: 17px;
+  }
+  /*container*/
+  .container .pitch{
+    font-size: 50px;
+  }
+  /*card*/
+  .card{
+    border-radius: 20px;
+    box-shadow: 0 0 3px 5px gray;
+    margin-bottom: 15px;
+    padding: 5px;
+  }
+  
