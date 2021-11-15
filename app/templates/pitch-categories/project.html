@@ -1,0 +1,23 @@
+{% extends 'pitch-categories/pitchbase.html' %}
+
+<!--Styles section-->
+{% block styles %}
+  {{ super()}}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/pitch.css')}}">
+{% endblock%}
+{% block  content %}
+  <div class="container">
+    <h1 class="text-center pitch"> Project Pitches </h1>
+    <!--Displaying pitches-->
+    {% for pitch in game_pitches %}
+      <div class="card" >
+        <h1>{{ pitch.pitch_title }}</h1>
+        <p>{{ pitch.pitch }}</p>
+        <p><i>Submitted on {{ pitch.submitted }}</i></p>
+        <div class="ml-auto voting"><span><b><a href="{{url_for('main.like',id=pitch.id)}}"><i class="fa fa-thumbs-up" style="color:green;"></i></a>{{pitch.upvote.count()}}</span>&nbsp <span><a href="{{url_for('main.dislike',id=pitch.id)}}"><i class="fa fa-thumbs-down" style="color:red;"></i></a>{{pitch.downvote.count()}}</span> </b></div>
+        <a class="btn  text-center card-footer" href="/comments/{{pitch.id}}">Leave a comment </a>
+      </div>
+    {% endfor %}
+    
+  </div>
+{% endblock %}
