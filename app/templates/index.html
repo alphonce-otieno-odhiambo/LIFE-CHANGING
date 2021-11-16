@@ -209,6 +209,25 @@
       
     </div>
   </div>
+  <div class="container-fluid">
+    <h2 class="text-center"><u>Pitches from Various users</u></h2>
+    <div class="row">
+        <div class = "col-md-6">
+        {% for pitch in pitches %}
+            <div class="card">
+                <div class="card-body">
+                    <h3 class = "card-title">Category : {{ pitch.pitch_category }}</h3>
+                    <p class = "card-text">Pitch : {{ pitch.pitch_title }}</h4>
+                    
+                    <a class =" btn btn-info" href="{{ url_for('main.new_comment', id = pitch.id)}}">Comment</a>
+                    <a class =" btn btn-info" href="{{url_for('main.like',id = pitch.id)}}">Upvotes:{{pitch.upvote.count()}}</a>
+                    <a class =" btn btn-danger" href="{{url_for('main.dislike',id = pitch.id)}}">Downvotes:{{pitch.downvote.count()}}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
   <footer class="bg-success text-white text-center text-lg-start">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">

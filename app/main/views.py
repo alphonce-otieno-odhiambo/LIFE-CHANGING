@@ -2,7 +2,7 @@ from flask import render_template,request,redirect,url_for,abort
 from .forms import UpdateProfile,PitchForm,CommentsForm
 from .. import db,photos
 from . import main
-from ..models import User,Pitches,Comments,Upvote,Downvote
+from ..models import User,Pitch,Comments,Upvote,Downvote
 from flask_login import login_required,current_user
 from ..search import get_pitches,get_pitch
 
@@ -12,13 +12,10 @@ def  index():
   '''
   Function that returns the home page
   '''
-  form = PitchForm()
-  if form.validate_on_submit():
-    new_pitch = Pitches(pitch_category = form.pitch_category.data, pitch_title = form.pitch_title.data,pitch = form.pitch.data,user=current_user)
-    new_pitch.save_pitch()
-    
-  title = "Impression in 60 seconds"
-  return render_template('index.html',title = title,pitch_form = form)
+  title = 'Life Changing'
+  pitches = Pitch.query.all()
+  
+  return render_template('index.html',title = title,pitches = pitches)
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -95,7 +92,7 @@ def  projectpitch():
 def new_comment(id): 
   form = CommentsForm()
   pitch = get_pitch(id) 
-  print(pitch)
+  
   
   if form.validate_on_submit(): 
     
@@ -124,3 +121,20 @@ def dislike(id):
     new_downvote = Downvote(pitch_id=id)
     new_downvote.save()     
     return redirect(url_for('main.index'))  
+
+@main.route('/create_new',methods = ['GET','POST'])
+@login_required
+def new_pitch():
+    form = PitchForm()
+
+    if form.validate_on_submit():
+        pitch_category = form.pitch_category.data
+        pitch_title = form.pitch_title.data
+        new_pitch = Pitch(pitch_category=pitch_category,pitch_title=pitch_title)
+        #saving new pitch
+        new_pitch.save_pitch()
+        return redirect(url_for('main.index'))
+    else:
+        all_pitches = Pitch.query.order_by(Pitch.submitted).all()
+
+    return render_template('pitch.html',pitch_form=form, all_pitches = all_pitches)

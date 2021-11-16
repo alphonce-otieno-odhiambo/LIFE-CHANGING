@@ -31,7 +31,7 @@ class User(UserMixin,db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
-class Pitches(db.Model): 
+class Pitch(db.Model): 
   __tablename__ = 'pitches' #name of table in pitch database
   
   id = db.Column(db.Integer,primary_key = True)
@@ -53,7 +53,7 @@ class Pitches(db.Model):
   @classmethod
   def get_pitches(cls,category):
     '''Method to retrieve pitches according to category'''
-    pitches = Pitches.query.filter_by(pitch_category = category).all()
+    pitches = Pitch.query.filter_by(pitch_category = category).all()
     return pitches
   
   def __repr__(self): 
